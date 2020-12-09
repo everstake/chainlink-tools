@@ -1,3 +1,4 @@
+### Disclaimer: Highly experimental. Use at your own risk! If used on production - test before use and consult Chainlink team
 #### Setup
 Place `docker-compose.yml` and external-adapters repo in the same directory
 ```
