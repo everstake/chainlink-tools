@@ -42,6 +42,10 @@ chainlinkuser@server> lslogins -u
 1020 chainlink   32                              ,,,
 ```
 
+#### How to upgrade bridges or use different code for each
+As seen from `docker-compose.yml` we build bridges by passing `adapter` argument from directory specified in `context: ./external-adapters-js` section.
+The easiest hack would be to separate needed bridge code to different dirs.
+
 
 #### You may need to install latest docker-compose version
 
