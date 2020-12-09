@@ -1,0 +1,95 @@
+version: "3.8"
+
+services:
+
+  cln_cryptocompare:
+    container_name: cln_cryptocompare
+    user: "1020"
+    build:
+      context: ./external-adapters-js
+      dockerfile: Dockerfile
+      args:
+        adapter: cryptocompare
+    ports:
+      - 8040:8080
+    restart: always
+    network_mode: "bridge"
+    environment:
+      API_KEY: "TOKEN_STRING"
+
+
+  cln_coingecko:
+     container_name: cln_coingecko
+     user: "1020"
+     build:
+       context: ./external-adapters-js
+       dockerfile: Dockerfile
+       args:
+         adapter: coingecko
+     ports:
+       - 8041:8080
+     restart: always
+     network_mode: "bridge"
+
+
+  cln_amberdata:
+     container_name: cln_amberdata
+     user: "1020"
+     build:
+       context: ./external-adapters-js
+       dockerfile: Dockerfile
+       args:
+         adapter: amberdata
+     ports:
+       - 8042:8080
+     restart: always
+     network_mode: "bridge"
+     environment:
+       API_KEY: "TOKEN_STRING"
+
+
+  cln_coinpaprika:
+     container_name: cln_coinpaprika
+     user: "1020"
+     build:
+       context: ./external-adapters-js
+       dockerfile: Dockerfile
+       args:
+         adapter: coinpaprika
+     ports:
+       - 8043:8080
+     restart: always
+     network_mode: "bridge"
+
+
+  cln_coinlore:
+     container_name: cln_coinlore
+     user: "1020"
+     build:
+       context: ./external-adapters-js
+       dockerfile: Dockerfile
+       args:
+         adapter: coinlore
+     ports:
+       - 8024:8080
+     restart: always
+     network_mode: "bridge"
+
+
+  cln_node:
+    container_name: cln_node
+    ports:
+      - 6688:6688
+    network_mode: "bridge"
+    restart: always
+    volumes:
+      - /mnt/CHAINLINK_main:/chainlink
+    image: smartcontract/chainlink:0.9.6
+    env_file: /mnt/CHAINLINK_main/.env
+    command: "local n -p /chainlink/.password -a /chainlink/.api"
+    depends_on:
+      - cln_cryptocompare
+      - cln_amberdata
+      - cln_coinpaprika
+      - cln_coingecko
+      - cln_coinlore
